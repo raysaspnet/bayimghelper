@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h2>Bayimg helper</h2>
+    <p class="lead">Bayimg (http://bayimg.com/) is a free host for images. But take time to find raw image url. This tool is to help get the image link right way.</p>
+</div>
+<br /><br /><br /><br />
+<div class="row">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <input type="file" name="file" />
+        <input type="submit" value="Upload" />
+    }
+</div>
+<br /><br /><br /><br />
+<br /><br /><br /><br />
+@Html.Partial("fbComment")
