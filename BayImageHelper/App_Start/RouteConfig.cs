@@ -16,7 +16,7 @@ namespace BayImageHelper
 
             routes.MapRoute(
     name: "Render",
-    url: "Getimg",
+    url: "i",
     defaults: new { controller = "Home", action = "get", id = UrlParameter.Optional }
 );
 
