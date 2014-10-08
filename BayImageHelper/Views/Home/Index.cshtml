@@ -5,15 +5,105 @@
 <div class="jumbotron">
     <h2>Bayimg helper</h2>
     <p class="lead">Bayimg (http://bayimg.com/) is a free host for images. But take time to find raw image url. This tool is to help get the image link right way.</p>
+    <br /><br /><br /><br />
+    <div class="row">
+        <div id="main">
+            <h4>Upload Your Images</h4>
+            <form id="uploadfrm" method="post" enctype="multipart/form-data" action="/home/upload">
+                <input type="file" name="images" id="images" />
+            </form>
+            <div id="response"></div>
+            <ul id="image-list"></ul>
+        </div>
+        <button onclick="Upload();">Upload</button>
+    </div>
 </div>
+
 <br /><br /><br /><br />
-<div class="row">
-    @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        <input type="file" name="file" />
-        <input type="submit" value="Upload" />
+@{
+    string rawUrl = "http://image.bayimg.com/38ba4e167a8f6ee9dc800b604cb0cfc6663bd720.jpg";
+    string workingurl = Url.Content("~") + "home/get?url=" + rawUrl;
+}
+<p>Bayimg also blocks refering this raw link directly in img tag, you can use following function to make your link working</p>
+<p>http://bayimghelper.apphb.com/home/get?url=http://image.bayimg.com/38ba4e167a8f6ee9dc800b604cb0cfc6663bd720.jpg</p>
+Not working: <img src="@rawUrl" />
+Working example: <img src="@workingurl" />
+<script>
+
+    function Upload() {
+        var form = document.getElementById('uploadfrm');
+        var formData = new FormData(form);
+        var xhr = new XMLHttpRequest();
+        // Add any event handlers here...
+        //xhr.open('POST', '/home/upload', true);
+        //xhr.send(formData);
+
+        $.ajax({
+            url: "/home/upload",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (res) {
+                document.getElementById("response").innerHTML = res;
+            }
+        });
     }
-</div>
+    //(function () {
+    //    var input = document.getElementById("images"),
+    //        formdata = false;
+
+    //    function showUploadedItem(source) {
+    //        var list = document.getElementById("image-list"),
+    //            li = document.createElement("li"),
+    //            img = document.createElement("img");
+    //        img.src = source;
+    //        li.appendChild(img);
+    //        list.appendChild(li);
+    //    }
+
+    //    if (window.FormData) {
+    //        formdata = new FormData();
+    //        document.getElementById("btn").style.display = "none";
+    //    }
+
+    //    input.addEventListener("change", function (evt) {
+    //        document.getElementById("response").innerHTML = "Uploading . . ."
+    //        var i = 0, len = this.files.length, img, reader, file;
+
+    //        for (; i < len; i++) {
+    //            file = this.files[i];
+
+    //            if (!!file.type.match(/image.*/)) {
+    //                if (window.FileReader) {
+    //                    reader = new FileReader();
+    //                    reader.onloadend = function (e) {
+    //                        showUploadedItem(e.target.result, file.fileName);
+    //                    };
+    //                    reader.readAsDataURL(file);
+    //                }
+    //                if (formdata) {
+    //                    formdata.append("images[]", file);
+    //                }
+    //            }
+    //        }
+
+    //        if (formdata) {
+    //            //$.ajax({
+    //            //    url: "/home/upload",
+    //            //    type: "POST",
+    //            //    data: formdata,
+    //            //    processData: false,
+    //            //    contentType: false,
+    //            //    success: function (res) {
+    //            //        document.getElementById("response").innerHTML = res;
+    //            //    }
+    //            //});
+    //        }
+    //    }, false);
+    //}());
+
+</script>
 <br /><br /><br /><br />
 <br /><br /><br /><br />
 @Html.Partial("fbComment")
