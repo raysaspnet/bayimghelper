@@ -15,6 +15,12 @@ namespace BayImageHelper.Controllers
         {
             return View();
         }
+        //public ActionResult (string url)
+        //{
+        //    var wc = new System.Net.WebClient();
+        //    var imageData = wc.DownloadData(url);
+        //    return File(imageData, "image/png"); // Might need to adjust the content type based on your actual image type
+        //}
         public ActionResult Get(string url)
         {
             //string imgurl = "http://image.bayimg.com/38ba4e167a8f6ee9dc800b604cb0cfc6663bd720.jpg";
